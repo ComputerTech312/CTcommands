@@ -18,7 +18,7 @@
 #               Special thanks to Suntop,Spyda,BdS,CrazyCat
 #               and Sir_Fz for all the help.
 #
-# History:
+# History: 
 #
 #               - 0.1: First Release.
 #
