@@ -1,2 +1,0 @@
-# CTcommands
-Elaborate Command Script
