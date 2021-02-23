@@ -26,7 +26,7 @@
 # Start Of Configuration #
 ##########################
 #Set trigger of the commands.
-#
+# 
 set ctcmd(trig) "!"
 #
 ##################
