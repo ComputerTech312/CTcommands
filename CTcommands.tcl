@@ -5,8 +5,8 @@
 #IRC       Irc.DareNet.Org  #ComputerTech
 #Email     ComputerTech@DareNet.Org
 #GitHub    https://github.com/computertech312
-#Version   0.1
-#Released  23/02/2021
+#Version   0.3
+#Released  09/03/2021
 #################################################################################################################################################################
 # Description:
 #
@@ -20,130 +20,133 @@
 #
 # History: 
 #
-#               - 0.1: First Release.
-#
+#               - 0.3: Added matchattr check to prevent punishment of 
+#                      bot users. (thanks to m4s for suggesting this)
+#               - 0.2: Improved some code.
+#               - 0.1: First release.
+#               
 #################################################################################################################################################################
 # Start Of Configuration #
 ##########################
-#Set trigger of the commands.
-# 
+# Set trigger of the commands.
+##
 set ctcmd(trig) "!"
-#
+
 ##################
-#Set to use Auth command or not (WARNING, Disabling this may cause vulnerabilities)
+# Set to use Auth command or not (WARNING, disabling this may cause vulnerabilities)
 ##
-#On  = 1
-#Off = 0
-#
+# On  = 1
+# Off = 0
+##
 set ctcmd(authcheck) "1"
-#
+
 ###################
-#Set flag for Commands.
+# Set flag for Commands.
 ##
-#Owner     = n
-#Master    = m
-#Op        = o
-#Voice     = v
-#Friend    = f
-#Everyone  = -
-set ctcmd(flag) "n"
-#
+# Owner     = n
+# Master    = m
+# Op        = o
+# Voice     = v
+# Friend    = f
+# Everyone  = -
+##
+set ctcmd(flag) "omn"
+
 ##################
-#Type of IRCd Your Network Uses
+# Type of IRCd Your Network Uses
 ##
-#1 = Unrealircd
-#2 = Inspircd
-#3 = Freenode
-#4 = IRCnet
-#5 = Other
-#
+# 1 = Unrealircd
+# 2 = Inspircd
+# 3 = Freenode
+# 4 = IRCnet
+# 5 = Other
+##
 set ctcmd(ircd) "1"
-#
+
 ##################
-#Set to use Notice Or Privmsg for Output of Commands
+# Set to use Notice Or Privmsg for Output of Commands
 ##
 #1 = Notice
 #2 = Privmsg
-#
-set ctcmd(msg) "1"
-#
-##################
-#Set the default ban time, if no Ban time is specified (in minutes 0 means No Expiry)
-#
-set ctcmd(bant) "60"
-#
-##################
-#Set Ban hostmask Type
 ##
-#0 *!user@host
-#1 *!*user@host
-#2 *!*@host
-#3 *!*user@*.host
-#4 *!*@*.host
-#5 nick!user@host
-#6 nick!*user@host
-#7 nick!*@host
-#8 nick!*user@*.host
-#9 nick!*@*.host
-#
+set ctcmd(msg) "1"
+
+##################
+# Set the default ban time, if no Ban time is specified (in minutes 0 means No Expiry)
+##
+set ctcmd(bant) "60"
+
+##################
+# Set Ban hostmask Type
+##
+# 0 *!user@host
+# 1 *!*user@host
+# 2 *!*@host
+# 3 *!*user@*.host
+# 4 *!*@*.host
+# 5 nick!user@host
+# 6 nick!*user@host
+# 7 nick!*@host
+# 8 nick!*user@*.host
+# 9 nick!*@*.host
+##
 set ctcmd(btype) "2"
-#
+
 ########################
 # End Of Configuration #
 #################################################################################################################################################################
-namespace eval ct {
+namespace eval ctcommands {
 set ctcmd(author) "ComputerTech"
-set ctcmd(ver) "0.1"
+set ctcmd(ver) "0.3"
 set ctcmd(logo) "\00302CTcommands\002"
 
-bind PUB $ctcmd(flag) $ctcmd(trig)cmdhelp ::ct::pub:cmdhelp
-bind PUB $ctcmd(flag) $ctcmd(trig)version ::ct::pub:version
-bind PUB $ctcmd(flag) $ctcmd(trig)owner ::ct::pub:owner
-bind PUB $ctcmd(flag) $ctcmd(trig)deowner ::ct::pub:deowner
-bind PUB $ctcmd(flag) $ctcmd(trig)protect ::ct::pub:protect
-bind PUB $ctcmd(flag) $ctcmd(trig)deprotect ::ct::pub:deprotect
-bind PUB $ctcmd(flag) $ctcmd(trig)op ::ct::pub:op
-bind PUB $ctcmd(flag) $ctcmd(trig)deop ::ct::pub:deop
-bind PUB $ctcmd(flag) $ctcmd(trig)halfop ::ct::pub:halfop
-bind PUB $ctcmd(flag) $ctcmd(trig)dehalfop ::ct::pub:dehalfop
-bind PUB $ctcmd(flag) $ctcmd(trig)voice ::ct::pub:voice
-bind PUB $ctcmd(flag) $ctcmd(trig)devoice ::ct::pub:devoice
-bind PUB $ctcmd(flag) $ctcmd(trig)say ::ct::pub:say
-bind PUB $ctcmd(flag) $ctcmd(trig)rehash ::ct::pub:rehash
-bind PUB $ctcmd(flag) $ctcmd(trig)restart ::ct::pub:restart
-bind PUB $ctcmd(flag) $ctcmd(trig)die ::ct::pub:die
-bind PUB $ctcmd(flag) $ctcmd(trig)topic ::ct::pub:topic
-bind PUB $ctcmd(flag) $ctcmd(trig)chanset ::ct::pub:chanset
-bind PUB $ctcmd(flag) $ctcmd(trig)ban ::ct::pub:ban
-bind PUB $ctcmd(flag) $ctcmd(trig)unban ::ct::pub:unban
-bind PUB $ctcmd(flag) $ctcmd(trig)kick ::ct::pub:kick
-bind PUB $ctcmd(flag) $ctcmd(trig)kickban ::ct::pub:kickban
-bind PUB $ctcmd(flag) $ctcmd(trig)mode ::ct::pub:mode
-bind PUB $ctcmd(flag) $ctcmd(trig)join ::ct::pub:join
-bind PUB $ctcmd(flag) $ctcmd(trig)part ::ct::pub:part
-bind PUB $ctcmd(flag) $ctcmd(trig)cycle ::ct::pub:cycle
-bind PUB $ctcmd(flag) $ctcmd(trig)invite ::ct::pub:invite
-bind PUB $ctcmd(flag) $ctcmd(trig)mute ::ct::pub:mute
-bind PUB $ctcmd(flag) $ctcmd(trig)unmute ::ct::pub:unmute
-bind PUB $ctcmd(flag) $ctcmd(trig)ping ::ct::pub:ping
-bind PUB $ctcmd(flag) $ctcmd(trig)act ::ct::pub:act
-bind PUB $ctcmd(flag) $ctcmd(trig)ignores ::ct::pub:ignores
-bind PUB $ctcmd(flag) $ctcmd(trig)addignore ::ct::pub:addignore
-bind PUB $ctcmd(flag) $ctcmd(trig)delignore ::ct::pub:delignore
-bind PUB $ctcmd(flag) $ctcmd(trig)bans ::ct::pub:bans
-bind PUB $ctcmd(flag) $ctcmd(trig)addban ::ct::pub:addban
-bind PUB $ctcmd(flag) $ctcmd(trig)delban ::ct::pub:delban
-bind PUB $ctcmd(flag) $ctcmd(trig)adduser ::ct::pub:adduser
-bind PUB $ctcmd(flag) $ctcmd(trig)deluser ::ct::pub:deluser
-bind PUB $ctcmd(flag) $ctcmd(trig)chattr ::ct::pub:chattr
-bind PUB $ctcmd(flag) $ctcmd(trig)addhost ::ct::pub:addhost
-bind PUB $ctcmd(flag) $ctcmd(trig)delhost ::ct::pub:delhost
-bind PUB $ctcmd(flag) $ctcmd(trig)whois ::ct::pub:whois
-bind PUB $ctcmd(flag) $ctcmd(trig)raw ::ct::pub:raw
-bind MSG - auth ::ct::ctcmd:auth
-bind MSG - deauth ::ct::ctcmd:deauth
+bind PUB $ctcmd(flag) $ctcmd(trig)cmdhelp ctcommands::pub:cmdhelp
+bind PUB $ctcmd(flag) $ctcmd(trig)version ctcommands::pub:version
+bind PUB $ctcmd(flag) $ctcmd(trig)owner ctcommands::pub:owner
+bind PUB $ctcmd(flag) $ctcmd(trig)deowner ctcommands::pub:deowner
+bind PUB $ctcmd(flag) $ctcmd(trig)protect ctcommands::pub:protect
+bind PUB $ctcmd(flag) $ctcmd(trig)deprotect ctcommands::pub:deprotect
+bind PUB $ctcmd(flag) $ctcmd(trig)op ctcommands::pub:op
+bind PUB $ctcmd(flag) $ctcmd(trig)deop ctcommands::pub:deop
+bind PUB $ctcmd(flag) $ctcmd(trig)halfop ctcommands::pub:halfop
+bind PUB $ctcmd(flag) $ctcmd(trig)dehalfop ctcommands::pub:dehalfop
+bind PUB $ctcmd(flag) $ctcmd(trig)voice ctcommands::pub:voice
+bind PUB $ctcmd(flag) $ctcmd(trig)devoice ctcommands::pub:devoice
+bind PUB $ctcmd(flag) $ctcmd(trig)say ctcommands::pub:say
+bind PUB $ctcmd(flag) $ctcmd(trig)rehash ctcommands::pub:rehash
+bind PUB $ctcmd(flag) $ctcmd(trig)restart ctcommands::pub:restart
+bind PUB $ctcmd(flag) $ctcmd(trig)die ctcommands::pub:die
+bind PUB $ctcmd(flag) $ctcmd(trig)topic ctcommands::pub:topic
+bind PUB $ctcmd(flag) $ctcmd(trig)chanset ctcommands::pub:chanset
+bind PUB $ctcmd(flag) $ctcmd(trig)ban ctcommands::pub:ban
+bind PUB $ctcmd(flag) $ctcmd(trig)unban ctcommands::pub:unban
+bind PUB $ctcmd(flag) $ctcmd(trig)kick ctcommands::pub:kick
+bind PUB $ctcmd(flag) $ctcmd(trig)kickban ctcommands::pub:kickban
+bind PUB $ctcmd(flag) $ctcmd(trig)mode ctcommands::pub:mode
+bind PUB $ctcmd(flag) $ctcmd(trig)join ctcommands::pub:join
+bind PUB $ctcmd(flag) $ctcmd(trig)part ctcommands::pub:part
+bind PUB $ctcmd(flag) $ctcmd(trig)cycle ctcommands::pub:cycle
+bind PUB $ctcmd(flag) $ctcmd(trig)invite ctcommands::pub:invite
+bind PUB $ctcmd(flag) $ctcmd(trig)mute ctcommands::pub:mute
+bind PUB $ctcmd(flag) $ctcmd(trig)unmute ctcommands::pub:unmute
+bind PUB $ctcmd(flag) $ctcmd(trig)ping ctcommands::pub:ping
+bind PUB $ctcmd(flag) $ctcmd(trig)act ctcommands::pub:act
+bind PUB $ctcmd(flag) $ctcmd(trig)ignores ctcommands::pub:ignores
+bind PUB $ctcmd(flag) $ctcmd(trig)addignore ctcommands::pub:addignore
+bind PUB $ctcmd(flag) $ctcmd(trig)delignore ctcommands::pub:delignore
+bind PUB $ctcmd(flag) $ctcmd(trig)bans ctcommands::pub:bans
+bind PUB $ctcmd(flag) $ctcmd(trig)addban ctcommands::pub:addban
+bind PUB $ctcmd(flag) $ctcmd(trig)delban ctcommands::pub:delban
+bind PUB $ctcmd(flag) $ctcmd(trig)adduser ctcommands::pub:adduser
+bind PUB $ctcmd(flag) $ctcmd(trig)deluser ctcommands::pub:deluser
+bind PUB $ctcmd(flag) $ctcmd(trig)chattr ctcommands::pub:chattr
+bind PUB $ctcmd(flag) $ctcmd(trig)addhost ctcommands::pub:addhost
+bind PUB $ctcmd(flag) $ctcmd(trig)delhost ctcommands::pub:delhost
+bind PUB $ctcmd(flag) $ctcmd(trig)whois ctcommands::pub:whois
+bind MSG - auth ctcommands::auth
+bind MSG - deauth ctcommands::deauth
 
-proc ct:set:gl {nick chan text} {
+proc ct:set:gl {nick chan} {
 global ctcmd
 	if {$ctcmd(msg) == "1"} {
 		set ctcmd(output) "NOTICE $nick"
@@ -156,7 +159,7 @@ global ctcmd
 		set ctcmd(out) "PRIVMSG $chan"
 	}
 }
-proc ctcmd:auth {nick uhost hand text} {
+proc auth {nick host hand text} {
     global botnick ctcmd
     set pw [lindex [split $text] 0]
     if {$pw == ""} {
@@ -174,7 +177,7 @@ proc ctcmd:auth {nick uhost hand text} {
     chattr $hand +Q
     putserv "$ctcmd(output) :Authentication Accepted"
     return }
-proc ctcmd:deauth {nick uhost hand text} {
+proc deauth {nick host hand text} {
     global botnick ctcmd
     set pw [lindex [split $text] 0]
     if {$pw == ""} {
@@ -192,6 +195,18 @@ proc ctcmd:deauth {nick uhost hand text} {
     chattr $hand -Q
     putserv "$ctcmd(output) :Deauthentication Successful"
     return
+}
+proc check:auth {nick hand} {
+    global ctcmd botnick
+    if {$ctcmd(authcheck) == "0" } {
+        return 1
+    }
+    if {[matchattr $hand Q]} {
+        return 1
+    } else {
+        puthelp "$ctcmd(output) :You are not authenticated, /msg $botnick auth <pass>"
+        return 0
+    }
 }
 proc pub:cmdhelp {nick host hand chan text} {
   global ctcmd botnick
@@ -239,7 +254,6 @@ if {$ctcmd(ircd) < "3"} {
    putserv "$ctcmd(out) :$ctcmd(trig)delignore <nick/host>"
    putserv "$ctcmd(out) :$ctcmd(trig)ignores"
    putserv "$ctcmd(out) :$ctcmd(trig)whois <nick>"
-   putserv "$ctcmd(out) :$ctcmd(trig)raw <text>"
 if {[matchattr [nick2hand $nick] $ctcmd(flag))]} {
    putserv "$ctcmd(out) :$ctcmd(trig)rehash"
    putserv "$ctcmd(out) :$ctcmd(trig)restart \[reason\]"
@@ -257,23 +271,18 @@ proc pub:version {nick host hand chan text} {
         putserv "$ctcmd(output) :Version: $ctcmd(ver)"
         putserv "$ctcmd(output) :Author: $ctcmd(author)"
 }
-proc pub:set:check {chan} {
+proc check:1 {chan} {
     global ctcmd
     if {![botisop $chan]} {
-    } elseif {$ctcmd(ircd) < "3"} { 
-    return 
+    putserv "$ctcmd(output) :I am Currently not Op'd on $chan."
     }
 }
-proc check:auth {nick hand} {
-    global ctcmd botnick
-    if {$ctcmd(authcheck) == "0" } {
-        return 1
-    }
-    if {[matchattr $hand Q]} {
-        return 1
-    } else {
-        puthelp "$ctcmd(output) :You are not authenticated, /msg $botnick auth <pass>"
-        return 0
+proc check:2 {chan} {
+    global ctcmd
+    if {![botisop $chan]} {
+    putserv "$ctcmd(output) :I am Currently not Op'd on $chan."
+    } elseif {$ctcmd(ircd) < "3"} { 
+    return 
     }
 }
 set pingchan ""
@@ -288,18 +297,7 @@ proc pub:ping {nick host hand chan text} {
 proc ct:pingr {nick uhost hand dest keyword args} {
     global pingchan ctcmd colo pingwho
     set time [expr {([clock clicks -milliseconds] - $args) / 1000.000}]
-    set char "="
-    if {[expr {round($time / 0.5)}] > 10} {set red 10} else {set red [expr {round($time / 0.5)}]}
-    set green [expr {10 - $red}]
-    set output \00303[string repeat $char $green]\003\00304[string repeat $char $red]\003
-        putquick "$ctcmd(output) :\[\00303PING\003\] reply from $pingwho: $output \[\00303$time\003\] seconds "
-}
-proc pub:raw {nick hoat hand chan text} {
-global ctcmd
-if {![check:auth $nick $hand ]} {return 0}
-set raw69 [lrange $text 0 end]
-putserv "$raw69"
-putserv "$ctcmd(output) :Outputed: $raw69"
+    putquick "$ctcmd(output) :\[\00303PING\003\] reply from $pingwho: \[\00303$time\003\] seconds "
 }
 proc pub:owner {nick host hand chan text} {
     if {![check:auth $nick $hand]} {return 0}
@@ -351,7 +349,7 @@ proc pub:deprotect {nick host hand chan text} {
 }
 proc pub:op {nick host hand chan text} {
     if {![check:auth $nick $hand]} {return 0}
-    if {![botisop $chan]} { ;return }
+    if {![botisop $chan]} {return 0}
     if {[lindex [split $text] 0 ] !=""} {
         foreach ctnick [split $text] {
             pushmode $chan +o $ctnick
@@ -363,7 +361,7 @@ proc pub:op {nick host hand chan text} {
 }
 proc pub:deop {nick host hand chan text} {
     if {![check:auth $nick $hand]} {return 0}
-    if {![botisop $chan]} { ;return }
+    if {![botisop $chan]} {return 0}
     if {[lindex [split $text] 0 ] !=""} {
         foreach ctnick [split $text] {
             pushmode $chan -o $ctnick
@@ -423,13 +421,11 @@ proc pub:devoice {nick host hand chan text} {
 }
 proc pub:say {nick host hand chan text} {
     if {![check:auth $nick $hand]} {return 0}
-    set 2say [lrange $text 0 end]
-    putserv "PRIVMSG $chan :$2say"
+    putserv "PRIVMSG $chan :$[lrange $text 0 end]"
 }
 proc pub:act {nick host hand chan text} {
     if {![check:auth $nick $hand ]} {return 0}
-    set 2act [lrange $text 0 end]
-    putserv "PRIVMSG $chan :\001ACTION $2act\001"
+    putserv "PRIVMSG $chan :\001ACTION [lrange $text 0 end]\001"
 }
 proc pub:rehash {nick host hand chan text} {
 global ctcmd
@@ -455,10 +451,9 @@ global ctcmd
 }
 proc pub:topic {nick host hand chan text} {
     if {![check:auth $nick $hand]} {return 0}
-    if {![botisop $chan]} { return 0
+    if {![botisop $chan]} {return 0
     } else {
-        set new2topic [lrange $text 0 end]
-        putquick "topic $chan :$new2topic"
+        putserv "TOPIC $chan :[lrange $text 0 end]"
     }
 }
 proc pub:chanset {nick host hand chan arg} {
@@ -479,14 +474,9 @@ global ctcmd
 proc pub:invite {nick host hand chan text} {
 global ctcmd
     if {![check:auth $nick $hand]} {return 0}
-    set var0 [lindex [split $text] 0 ]
-    putquick "INVITE $var0 $chan"
-    putserv "$ctcmd(output) :Invited $var0 to $chan"
-    if {$ctcmd(msg) == "1" } { 
-    putserv "NOTICE $var0 :You have been invited to $chan"
-    } else {
-    putserv "PRIVMSG $var0 :You have been invited to $chan"
-    }
+    putquick "INVITE [lindex [split $text] 0 ] $chan"
+    putserv "$ctcmd(output) :Invited [lindex [split $text] 0 ] to $chan"
+    putserv "$ctcmd(output) :You have been invited to $chan"
 }
 proc pub:mute {nick uhost hand chan text} {
     global ctcmd
@@ -497,16 +487,13 @@ proc pub:mute {nick uhost hand chan text} {
     if {[matchattr [nick2hand $var0] n]} {return 0}
     if {[onchan $var0 $chan]} {
         set host "[maskhost $var0![getchanhost $var0 $chan] $ctcmd(btype)]"
-        if {($ctcmd(ircd) == "1")} {putquick "mode $chan +b ~q:$host"}
-        if {($ctcmd(ircd) == "2")} {putquick "mode $chan +b m:$host"}
-        if {($ctcmd(ircd) == "3")} {putquick "mode $chan +q $var0"}
-        if {($ctcmd(ircd) == "4")} {putquick "mode $chan +b $var0"}
-    } else {
-        if {($ctcmd(ircd) == "1")} {putquick "mode $chan +b ~q:$host"}
-        if {($ctcmd(ircd) == "2")} {putquick "mode $chan +b m:$host"}
-        if {($ctcmd(ircd) == "3")} {putquick "mode $chan +q $var0"}
-        if {($ctcmd(ircd) == "4")} {putquick "mode $chan +b $var0"}
+switch -- $ctcmd(ircd) {
+         1 {putquick "mode $chan +b ~q:$host"}
+         2 {putquick "mode $chan +b m:$host"}
+         3 {putquick "mode $chan +q $var0"}
+         4 {putquick "mode $chan +b $var0"}
     }
+  }
 }
 proc pub:unmute {nick host hand chan text} {
     global ctcmd
@@ -517,24 +504,21 @@ proc pub:unmute {nick host hand chan text} {
     if {[matchattr [nick2hand $var0] n]} {return 0}
     if {[onchan $var0 $chan]} {
         set host "[maskhost $var0![getchanhost $var0 $chan] $ctcmd(btype)]"
-        if {($ctcmd(ircd) == "1")} {putquick "mode $chan -b ~q:$host"}
-        if {($ctcmd(ircd) == "2")} {putquick "mode $chan -b m:$host"}
-        if {($ctcmd(ircd) == "3")} {putquick "mode $chan -q $var0"}
-        if {($ctcmd(ircd) == "4")} {putquick "mode $chan -b $var0"}
-    } else {
-        if {($ctcmd(ircd) == "1")} {putquick "mode $chan -b ~q:$host"}
-        if {($ctcmd(ircd) == "2")} {putquick "mode $chan -b m:$host"}
-        if {($ctcmd(ircd) == "3")} {putquick "mode $chan -q $var0"}
-        if {($ctcmd(ircd) == "4")} {putquick "mode $chan -b $var0"}
+switch -- $ctcmd(ircd) {
+        1 {putquick "mode $chan -b ~q:$host"}
+        2 {putquick "mode $chan -b m:$host"}
+        3 {putquick "mode $chan -q $var0"}
+        4 {putquick "mode $chan -b $var0"}
     }
+  }
 }
 proc pub:ban {nick host hand chan text} {
     if {![check:auth $nick $hand]} {return 0}
     global ctcmd
     set var0 [lindex [split $text] 0 ]
     if {![botisop $chan]} {
-    } elseif {[isbotnick $var0]} {
-    } elseif {[matchattr [nick2hand $var0] n]} { return }
+    } elseif {[isbotnick $kbnick] && [matchattr [nick2hand $kbnick] $ctcmd(flag)]} {
+    } return }
     if {[onchan $var0 $chan]} {
         set bhost "[maskhost $var0![getchanhost $var0 $chan] $ctcmd(btype)]"
         putnow "mode $chan +b $bhost"
@@ -559,9 +543,8 @@ proc pub:kickban {nick uhost hand chan text} {
     if {![check:auth $nick $hand ]} {return 0}
     if {![botisop $chan]} { return 0 }
     set kbnick [lindex [split $text] 0 ]
-    if {[isbotnick $kbnick]} {
-        return
-    } elseif {[matchattr [nick2hand $kbnick] $ctcmd(flag)]} { return 0
+    if {[isbotnick $kbnick] && [matchattr [nick2hand $kbnick] $ctcmd(flag)]} {
+        return 
     } else {
         if {[lrange $text 1 end] !=""} {
             set reason "[lrange $text 1 end] ($nick)"
@@ -628,9 +611,20 @@ global ctcmd
     channel remove $2part
     putserv "$ctcmd(out) :Parting $2part"
 }
-proc pub:mode {nick host hand chan text} {
-    if {![check:auth $nick $hand]} {return 0}
-    putserv "MODE $chan $text"
+proc pub:mode {nick uhost hand chan text} {
+if {![check:auth $nick $hand ]} {return 0}
+    if {![botisop $chan]} {return 0
+        set a2modes [join [lindex [split $text] 0]]
+        if {[string first - $a2modes] >=0} {
+            set chanmodes [getchanmode $chan]
+            set modes [join [lindex [split $chanmodes] 0]]
+            if {[string first k $modes]>0} {
+                putserv "MODE $chan $text [join [lindex [split $chanmodes] 1]]"
+            } else {
+                putserv "MODE $chan $text"
+         }
+      }
+   }
 }
 proc pub:adduser {nick host hand chan text} {
     global ctcmd
@@ -826,12 +820,12 @@ proc pub:whois {nick host hand chan arg} {
     set ::whoistarget $target
     set ::channel3 $chan
 }
-    bind RAW - 311 ::ct::set:info
-    bind RAW - 319 ::ct::set:channels
-    bind RAW - 301 ::ct::set:away
-    bind RAW - 313 ::ct::set:ircop
-    bind RAW - 330 ::ct::set:auth
-    bind RAW - 317 ::ct::set:idle
+    bind RAW - 311 ctcommands::set:info
+    bind RAW - 319 ctcommands::set:channels
+    bind RAW - 301 ctcommands::set:away
+    bind RAW - 313 ctcommands::set:ircop
+    bind RAW - 330 ctcommands::set:auth
+    bind RAW - 317 ctcommands::set:idle
 proc set:putmsg {chan arg} {
 global ctcmd
  set nick3 $::nickout
